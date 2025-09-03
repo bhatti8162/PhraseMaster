@@ -123,7 +123,14 @@ button.active { background-color: var(--accent); color: var(--bg); }
   cursor: pointer;
 }
 
-.top-img img{width:650px;max-height:550px;object-fit:fill;border-radius:12px;border:2px solid #1e2755;margin-bottom:20px}
+.top-img img{
+  width:650px;
+  max-height:550px;
+  object-fit:fill;
+  border-radius:12px;
+  border:2px solid #1e2755;
+  margin-bottom:20px
+}
 </style>
 </head>
 <body>
@@ -154,7 +161,7 @@ button.active { background-color: var(--accent); color: var(--bg); }
 <!-- Bottom stats panel -->
 <div class="bottom-stats">
   <span>Score: <span id="score">0</span></span>
-  <span>Streak: <span id="streak">0</span></span>
+  <span>WPM: <span id="wpm">0</span></span>
   <span>Errors: <span id="errors">0</span></span>
   <span>Accuracy: <span id="accuracy">100%</span></span>
 </div>
@@ -174,70 +181,38 @@ keys.forEach(k=>{
 // Drills per difficulty
 const drills = {
   easy: [
-      // 🔹 Single-finger repetition
-  "aaaa", "ssss", "dddd", "ffff",
-  "jjjj", "kkkk", "llll", ";;;;",
-
-  // 🔹 Two-finger alternation
-  "asas", "sasa", "dfdf", "fdfd",
-  "jkjk", "kjkj", "l;l;", ";l;l",
-  "adad", "sdsd", "fdfd", "jljl",
-  "k;k;", "l;l;",
-
-  // 🔹 Basic combos (classic runs)
-  "asdf", "fdsa", "jkl;", ";lkj",
-  "adsf", "fsda", "jlk;", ";klj",
-  "safd", "dfas", "kj;l", "l;kj",
-
-  // 🔹 Cross-hand drills
-  "asjk", "df;l", "sa;j", "lk;d",
-  "ajsk", "d;fl", "a;sd", "fjkl",
-
-  // 🔹 Longer sequences
-  "asdfjkl;", "fdsa;lkj", "asdjkl;", "kljasd",
-  "a;sldkfj", "f;djskla", "jaklfsd;",
-
-  // 🔹 Mixed random-like
-  "s;df", "ajkl", "fkja", "dl;s",
-  "kjsa", "lf;d", "sd;f", "a;jk"
+    "aaaa","ssss","dddd","ffff","jjjj","kkkk","llll",";;;;",
+    "asas","sasa","dfdf","fdfd","jkjk","kjkj","l;l;",";l;l",
+    "asdf","fdsa","jkl;",";lkj","asdfjkl;","fdsa;lkj","asdjkl;","kljasd",
+    "asjk","df;l","sa;j","lk;d","a;sldkfj","f;djskla","jaklfsd;",
+    "s;df","ajkl","fkja","dl;s","kjsa","lf;d","sd;f","a;jk"
   ],
   medium: [
-  // 🔹 Top row drills (focus)
-  "qwer", "rewq", "tyui", "iuyt", "opop", "poiu",
-  "qwas", "erdf", "tygh", "uihj", "opkl",
-  "qwerty", "ytrewq", "uiop", "poiu",
-
-  // 🔹 Bottom row drills (focus)
-  "zxcv", "vcxz", "bnm,", ",mnb",
-  "azsx", "qazx", "wsxc", "edcv", "rfvb", "tgby",
-  "zxcvbn", "nbvcxz",
-
-  // 🔹 Mixed cross-row drills
-  "aqsw", "zsexd", "qazwsx", "edcrfv",
-  "pl;'", "okmn", "ijnb", "uhjm",
-  "asdfqwer", "zxcvasdf",
-
-  // 🔹 Home row (just anchor/reference)
-  "asdf", "fdsa", "jkl;", ";lkj",
-  "asdfasdf", "fdsafdsa",
-  "jkl;jkl;", ";lkj;lkj",
-  "asdfjkl;", "fsda;klj"
+    "qwer","rewq","tyui","iuyt","opop","poiu",
+    "qwas","erdf","tygh","uihj","opkl",
+    "qwerty","ytrewq","uiop","poiu",
+    "zxcv","vcxz","bnm,",",mnb",
+    "azsx","qazx","wsxc","edcv","rfvb","tgby",
+    "zxcvbn","nbvcxz",
+    "aqsw","zsexd","qazwsx","edcrfv",
+    "pl;'","okmn","ijnb","uhjm",
+    "asdfqwer","zxcvasdf",
+    "asdf","fdsa","jkl;",";lkj",
+    "asdfasdf","fdsafdsa",
+    "jkl;jkl;",";lkj;lkj",
+    "asdfjkl;","fsda;klj"
   ],
-
   hard: [
-  // 🔹 Hard / special characters
-  "awkward", "rhythm", "zephyr", "mnemonic", "quizzical",
-  "1234567890", "!@#$%^&*", ")(*&^%$#@", "password123!", "qwerty2024?",
-  ".,;:!?'", "\"\"''--__", "((){})[]<>", "`~|\\", "C0d3!ng", "P@ssw0rd!",
-  "Typ1ng#Fast", "admin@login", "root#123", "mail@example.com",
-  "https://", "www.example.com",
-
-  // 🔹 Speed words
-  "the", "and", "for", "you", "are", "was", "all", "any", "can", "had",
-  "there", "about", "after", "other", "where", "under", "never", "always",
-  "together", "everyone", "important", "different", "remember", "possible",
-  "how are you", "thank you", "good morning", "see you soon", 
-  "have a nice day", "let’s go now"
+    "awkward","rhythm","zephyr","mnemonic","quizzical",
+    "1234567890","!@#$%^&*",")(*&^%$#@","password123!","qwerty2024?",
+    ".,;:!?'", "\"\"''--__","((){})[]<>","`~|\\","C0d3!ng","P@ssw0rd!",
+    "Typ1ng#Fast","admin@login","root#123","mail@example.com",
+    "https://","www.example.com",
+    "the","and","for","you","are","was","all","any","can","had",
+    "there","about","after","other","where","under","never","always",
+    "together","everyone","important","different","remember","possible",
+    "how are you","thank you","good morning","see you soon", 
+    "have a nice day","let’s go now"
   ]
 };
 
@@ -245,12 +220,12 @@ let currentLevel = "easy";
 let currentIndex = 0;
 let drillText = "";
 let score = 0;
-let streak = 0;
 let errors = 0;
+let startTime = null;
 
 const typingLine = document.getElementById('typing-line');
 const scoreEl = document.getElementById('score');
-const streakEl = document.getElementById('streak');
+const wpmEl = document.getElementById('wpm');
 const errorsEl = document.getElementById('errors');
 const accuracyEl = document.getElementById('accuracy');
 const levelButtons = document.querySelectorAll("#difficulty button");
@@ -286,11 +261,17 @@ function updateLine(){
 
 function updateStats(){
   scoreEl.textContent = score;
-  streakEl.textContent = streak;
   errorsEl.textContent = errors;
+
   const total = score + errors;
   const acc = total > 0 ? ((score/total)*100).toFixed(1) : 100;
   accuracyEl.textContent = acc + "%";
+
+  if(startTime){
+    const elapsedMinutes = (Date.now() - startTime) / 60000;
+    const wpm = elapsedMinutes > 0 ? ((score/5) / elapsedMinutes).toFixed(1) : 0;
+    wpmEl.textContent = wpm;
+  }
 }
 
 // Difficulty buttons
@@ -305,6 +286,8 @@ levelButtons.forEach(btn=>{
 
 // Typing logic
 document.addEventListener('keydown', e=>{
+  if(!startTime) startTime = Date.now(); // start timer on first key
+
   const key = e.key.toLowerCase();
   const expected = drillText[currentIndex];
   const keyChar = key===' ' ? ' ' : key;
@@ -312,10 +295,8 @@ document.addEventListener('keydown', e=>{
   if(keyChar === expected){
     currentIndex++;
     score++;
-    streak++;
     highlightKey(key,'correct');
   } else {
-    streak = 0;
     errors++;
     highlightKey(key,'incorrect');
   }
