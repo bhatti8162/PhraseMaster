@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Infinite Typing Trainer</title>
+<style>
+:root{
+  --bg:#0b1020;
+  --panel:#121933;
+  --panel-2:#0f1530;
+  --text:#e6ecff;
+  --muted:#9eb0ff99;
+  --accent:#7aa2ff;
+  --good:#6ee7a8;
+  --bad:#ff6b6b;
+  --ring: 0 0 0 3px rgba(122,162,255,.25);
+}
+
+* { margin:0; padding:0; box-sizing:border-box; font-family: monospace; }
+body {
+  background-color: var(--bg);
+  color: var(--text);
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:flex-start;
+  min-height:100vh;
+  padding:20px;
+}
+
+h1 { margin-bottom:20px; color: var(--accent); }
+
+.panel {
+  background-color: var(--panel);
+  padding: 20px;
+  border-radius: 10px;
+  width: 100%;
+  max-width: 900px;
+  box-shadow: var(--ring);
+  text-align:center;
+  margin-bottom:80px; /* leave space for bottom stats */
+}
+
+#typing-line {
+  font-size: 2rem;
+  margin-bottom: 20px;
+  word-break: break-word;
+  min-height:50px;
+}
+
+#keyboard {
+  display: grid;
+  grid-template-columns: repeat(15, 1fr);
+  gap: 5px;
+  justify-items: center;
+  margin-top: 20px;
+}
+
+.key {
+  padding: 15px;
+  min-width: 40px;
+  text-align: center;
+  background-color: var(--panel-2);
+  border-radius: 5px;
+  border: 2px solid var(--panel);
+  user-select:none;
+  box-shadow: 0 3px 0 rgba(0,0,0,0.2);
+  transition: all 0.1s;
+}
+
+.key.active { background-color: var(--accent); color: var(--bg); transform: translateY(2px); }
+.key.correct { background-color: var(--good); color: var(--bg); transform: translateY(2px); }
+.key.incorrect { background-color: var(--bad); color: var(--bg); transform: translateY(2px); }
+
+#difficulty {
+  margin-bottom: 15px;
+}
+
+button {
+  padding:8px 12px;
+  margin:0 5px;
+  border:none;
+  border-radius:5px;
+  background-color: var(--panel-2);
+  color: var(--text);
+  cursor:pointer;
+}
+
+button.active { background-color: var(--accent); color: var(--bg); }
+
+/* Bottom fixed stats */
+.bottom-stats {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--panel);
+  display: flex;
+  justify-content: center;
+  gap: 50px;
+  padding: 15px 0;
+  font-size: 1.5rem;
+  font-weight: bold;
+  box-shadow: 0 -3px 10px rgba(0,0,0,0.5);
+  z-index: 10;
+}
+.bottom-stats span {
+  color: var(--accent);
+}
+
+/* Back to Home button top-left */
+#back-home {
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 20;
+  background-color: var(--accent);
+  color: var(--bg);
+  padding: 8px 15px;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+}
+</style>
+</head>
+<body>
+
+<!-- Back to Home Button -->
+<a href="./index.html">
+  <button id="back-home">Back to Home</button>
+</a>
+
+<h1>Infinite Typing Trainer</h1>
+
+<!-- Difficulty Selection -->
+<div id="difficulty">
+  <button data-level="easy" class="active">Easy</button>
+  <button data-level="medium">Medium</button>
+  <button data-level="hard">Hard</button>
+</div>
+
+<div class="panel">
+  <div id="typing-line">Loading drill...</div>
+  <div id="keyboard"></div>
+</div>
+
+<!-- Bottom stats panel -->
+<div class="bottom-stats">
+  <span>Score: <span id="score">0</span></span>
+  <span>Streak: <span id="streak">0</span></span>
+  <span>Errors: <span id="errors">0</span></span>
+  <span>Accuracy: <span id="accuracy">100%</span></span>
+</div>
+
+<script>
+// Keyboard layout QWERTY with special chars
+const keys = ["1","2","3","4","5","6","7","8","9","0","q","w","e","r","t","y","u","i","o","p","a","s","d","f","g","h","j","k","l","z","x","c","v","b","n","m"," ",",",".","/",";","'","[","]","\\","-","="];
+const keyboardEl = document.getElementById('keyboard');
+keys.forEach(k=>{
+  const div = document.createElement('div');
+  div.textContent = k===' ' ? ' ' : k;
+  div.className = 'key';
+  div.id = 'key-'+ (k===' ' ? 'space' : k);
+  keyboardEl.appendChild(div);
+});
+
+// Drills per difficulty
+const drills = {
+  easy: ["asas","sasa","dfdf","fdfd","jkjk","kjkj","l;l;",";l;l","aaaa","ssss","dddd","ffff","jjjj","kkkk","llll",";;;;","asdf","fdsa","jkl;",";lkj","adsf","fsda","jlk;",";klj","adad","fdfs","jljk",";l;k","safd","dfas","kj;l","l;kj"],
+  medium: ["asdf","fdsa","jkl;",";lkj","qwqw","wqwq","rere","rere","asqw","sawq","dfer","fdre","jku i","kj iu","l;op",";lpo","asdfasdf","fdsafdsa","jkl;jkl;",";lkj;lkj","qwerqwer","wqrewqre","asdfjkl;","fsda;klj","qwerasdf","jkluiop"],
+  hard: ["1234567890","qwertyuiop","!@#$%^&*()","zxcvbnm,./;'[]\\-="]
+};
+
+let currentLevel = "easy";
+let currentIndex = 0;
+let drillText = "";
+let score = 0;
+let streak = 0;
+let errors = 0;
+
+const typingLine = document.getElementById('typing-line');
+const scoreEl = document.getElementById('score');
+const streakEl = document.getElementById('streak');
+const errorsEl = document.getElementById('errors');
+const accuracyEl = document.getElementById('accuracy');
+const levelButtons = document.querySelectorAll("#difficulty button");
+
+function getNewDrill(){
+  const arr = drills[currentLevel];
+  drillText = arr[Math.floor(Math.random()*arr.length)];
+  currentIndex = 0;
+  updateLine();
+}
+
+function highlightKey(char, state){
+  const keyId = char===' ' ? 'space' : char;
+  const keyDiv = document.getElementById('key-'+keyId);
+  if(!keyDiv) return;
+  keyDiv.className = 'key '+state;
+  setTimeout(()=>{ keyDiv.className='key'; },150);
+}
+
+function updateLine(){
+  let displayed = "";
+  for(let i=0;i<drillText.length;i++){
+    if(i<currentIndex){
+      displayed += `<span style="color:var(--good)">${drillText[i]}</span>`;
+    } else if(i===currentIndex){
+      displayed += `<span style="color:var(--accent); text-decoration: underline">${drillText[i]}</span>`;
+    } else {
+      displayed += drillText[i];
+    }
+  }
+  typingLine.innerHTML = displayed;
+}
+
+function updateStats(){
+  scoreEl.textContent = score;
+  streakEl.textContent = streak;
+  errorsEl.textContent = errors;
+  const total = score + errors;
+  const acc = total > 0 ? ((score/total)*100).toFixed(1) : 100;
+  accuracyEl.textContent = acc + "%";
+}
+
+// Difficulty buttons
+levelButtons.forEach(btn=>{
+  btn.addEventListener('click', ()=>{
+    levelButtons.forEach(b=>b.classList.remove('active'));
+    btn.classList.add('active');
+    currentLevel = btn.dataset.level;
+    getNewDrill();
+  });
+});
+
+// Typing logic
+document.addEventListener('keydown', e=>{
+  const key = e.key.toLowerCase();
+  const expected = drillText[currentIndex];
+  const keyChar = key===' ' ? ' ' : key;
+
+  if(keyChar === expected){
+    currentIndex++;
+    score++;
+    streak++;
+    highlightKey(key,'correct');
+  } else {
+    streak = 0;
+    errors++;
+    highlightKey(key,'incorrect');
+  }
+
+  updateStats();
+
+  if(currentIndex>=drillText.length){
+    getNewDrill();
+  } else {
+    updateLine();
+  }
+});
+
+getNewDrill();
+</script>
+
+</body>
+</html>
