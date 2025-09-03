@@ -17,13 +17,54 @@
       --ring: 0 0 0 3px rgba(122,162,255,.25);
     }
     body{
-      margin:0; font:16px/1.5 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
+      margin:0;
+      font:16px/1.5 ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Inter,Arial,sans-serif;
       background:var(--bg); color:var(--text);
       display:flex;flex-direction:column;align-items:center;justify-content:flex-start;
     }
     .container{width:100%;max-width:900px;padding:16px;display:flex;flex-direction:column;align-items:center}
-    header{margin-bottom:16px;text-align:center}
-    header h1{font-size:24px;margin:0;font-weight:700}
+
+    /* --- Header Bar --- */
+    .header-bar{
+      width:100%;
+      background:var(--panel);
+      border-bottom:1px solid #1e2755;
+      padding:12px 20px;
+      display:flex;
+      align-items:center;
+      justify-content:flex-start;
+      position:sticky;
+      top:0;
+      z-index:10;
+    }
+    .header-bar h1{
+      margin: 0px 20px;
+      font-size:20px;
+      font-weight:700;
+      color:var(--text);
+    }
+
+    .header-bar a{
+      text-decoration:none;
+    }
+    .header-btn{
+      background:var(--accent);
+      color:var(--bg);
+      padding:8px 14px;
+      margin: 8px 14px;
+      border-radius:8px;
+      font-weight:600;
+      border:none;
+      cursor:pointer;
+      font-size:14px;
+    }
+
+    .header-btn:hover{
+    background:var(--good);
+    color:var(--bg);
+    transform: translateY(-2px);  /* subtle lift */
+    box-shadow:0 4px 12px rgba(0,0,0,0.25);
+  }
 
     .top-img img{width:650px;max-height:550px;object-fit:fill;border-radius:12px;border:2px solid #1e2755;margin-bottom:20px}
 
@@ -33,7 +74,7 @@
     .char.done{opacity:1;color:#dfe6ff}
     .char.good{color:var(--good)}
     .char.bad{color:var(--bad)}
-    .cursor::after{content:"";position:absolute;left:0;bottom:-3px;width:100%;height:2px;background:var(--accent)}
+    /* .cursor::after{content:"";position:absolute;left:0;bottom:-3px;width:100%;height:2px;background:var(--accent)} */
 
     .input-wrap{display:flex;gap:10px;align-items:center;margin-top:14px}
     #input, #customPhrase{flex:1;border:none;outline:none;background:#0d1430;border:1px solid #2a3468;color:var(--text);border-radius:12px;padding:14px 12px;font-size:18px}
@@ -50,11 +91,16 @@
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>Custom Typing Practice</h1>
-    </header>
+  
+  <!-- Header Bar -->
+  <div class="header-bar">
+    <h1>Custom Typing Practice</h1>
+    <a href="./index.html"><button class="header-btn">Home</button></a>
+    <a href="./Touch.html"><button class="header-btn">Touch typing</button></a>
+    <a href="./index.html" target="_blank"><button class="header-btn">Ztype</button></a>
+  </div>
 
+  <div class="container">
     <div class="top-img">
       <img src="./TouchTypingKeyboardFingerChart.jpg" />
     </div>
@@ -74,15 +120,17 @@
       <div class="stats">
         <div class="stat"><div class="label">Time</div><div id="time" class="value">0.0s</div></div>
         <div class="stat"><div class="label">WPM</div><div id="wpm" class="value">0</div></div>
-        <div class="stat"><div class="label">Accuracy</div><div id="acc" class="value">100%</div></div>
+        <div class="stat"><div class="label">Accuracy</div><div id="acc" class="value">100%</</div></div>
         <div class="stat"><div class="label">Errors</div><div id="err" class="value">0</div></div>
         <div class="stat"><div class="label">Completed</div><div id="completed" class="value">0</div></div>
       </div>
     </section>
 
     <div id="summary"></div>
-    <div class="footer">Infinite practice with your own phrases. <br>
-Credit to <a target="_blank" href="https://www.linkedin.com/in/sameer-bhatti-8a2256235/" style="text-decoration: none;">Sameer Bhatti</a>, Co-Founder of Amal Scholars Academy.</div>
+    <div class="footer">
+      Infinite practice with your own phrases. <br>
+      Credit to <a target="_blank" href="https://www.linkedin.com/in/sameer-bhatti-8a2256235/" style="text-decoration: none;">Sameer Bhatti</a>, Co-Founder of Amal Scholars Academy.
+    </div>
   </div>
 
 <script>
