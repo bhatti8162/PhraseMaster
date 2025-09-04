@@ -1,317 +1,447 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Infinite Typing Trainer</title>
-<style>
-:root{
-  --bg:#0b1020;
-  --panel:#121933;
-  --panel-2:#0f1530;
-  --text:#e6ecff;
-  --muted:#9eb0ff99;
-  --accent:#7aa2ff;
-  --good:#6ee7a8;
-  --bad:#ff6b6b;
-  --ring: 0 0 0 3px rgba(122,162,255,.25);
-}
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Infinite Typing Trainer</title>
+  <style>
+    :root {
+      --bg: #0b1020;
+      --panel: #121933;
+      --panel-2: #0f1530;
+      --text: #e6ecff;
+      --muted: #9eb0ff99;
+      --accent: #7aa2ff;
+      --good: #6ee7a8;
+      --bad: #ff6b6b;
+      --ring: 0 0 0 3px rgba(122, 162, 255, .25);
+    }
 
-* { margin:0; padding:0; box-sizing:border-box; font-family: monospace; }
-body {
-  background-color: var(--bg);
-  color: var(--text);
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:flex-start;
-  min-height:100vh;
-  padding:20px;
-}
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: monospace;
+    }
 
-h1 { margin-bottom:20px; color: var(--accent); }
+    body {
+      background-color: var(--bg);
+      color: var(--text);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 100vh;
+      padding: 20px;
+    }
 
-.panel {
-  background-color: var(--panel);
-  padding: 20px;
-  border-radius: 10px;
-  width: 100%;
-  max-width: 900px;
-  box-shadow: var(--ring);
-  text-align:center;
-  margin-bottom:80px; /* leave space for bottom stats */
-}
+    h1 {
+      margin-bottom: 20px;
+      color: var(--accent);
+    }
 
-#typing-line {
-  font-size: 2rem;
-  margin-bottom: 20px;
-  word-break: break-word;
-  min-height:50px;
-}
+    .panel {
+      background-color: var(--panel);
+      padding: 20px;
+      border-radius: 10px;
+      width: 100%;
+      max-width: 900px;
+      box-shadow: var(--ring);
+      text-align: center;
+      margin-bottom: 80px;
+      /* leave space for bottom stats */
+    }
 
-#keyboard {
-  display: grid;
-  grid-template-columns: repeat(15, 1fr);
-  gap: 5px;
-  justify-items: center;
-  margin-top: 20px;
-}
+    #typing-line {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      word-break: break-word;
+      min-height: 50px;
+    }
 
-.key {
-  padding: 15px;
-  min-width: 40px;
-  text-align: center;
-  background-color: var(--panel-2);
-  border-radius: 5px;
-  border: 2px solid var(--panel);
-  user-select:none;
-  box-shadow: 0 3px 0 rgba(0,0,0,0.2);
-  transition: all 0.1s;
-}
+    #keyboard {
+      display: grid;
+      grid-template-columns: repeat(15, 1fr);
+      gap: 5px;
+      justify-items: center;
+      margin-top: 20px;
+    }
 
-.key.active { background-color: var(--accent); color: var(--bg); transform: translateY(2px); }
-.key.correct { background-color: var(--good); color: var(--bg); transform: translateY(2px); }
-.key.incorrect { background-color: var(--bad); color: var(--bg); transform: translateY(2px); }
+    .key {
+      padding: 15px;
+      min-width: 40px;
+      text-align: center;
+      background-color: var(--panel-2);
+      border-radius: 5px;
+      border: 2px solid var(--panel);
+      user-select: none;
+      box-shadow: 0 3px 0 rgba(0, 0, 0, 0.2);
+      transition: all 0.1s;
+    }
 
-#difficulty {
-  margin-bottom: 15px;
-}
+    .key.active {
+      background-color: var(--accent);
+      color: var(--bg);
+      transform: translateY(2px);
+    }
 
-button {
-  padding:8px 12px;
-  margin:0 5px;
-  border:none;
-  border-radius:5px;
-  background-color: var(--panel-2);
-  color: var(--text);
-  cursor:pointer;
-}
+    .key.correct {
+      background-color: var(--good);
+      color: var(--bg);
+      transform: translateY(2px);
+    }
 
-button.active { background-color: var(--accent); color: var(--bg); }
+    .key.incorrect {
+      background-color: var(--bad);
+      color: var(--bg);
+      transform: translateY(2px);
+    }
 
-/* Bottom fixed stats */
-.bottom-stats {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  background-color: var(--panel);
-  display: flex;
-  justify-content: center;
-  gap: 50px;
-  padding: 15px 0;
-  font-size: 1.5rem;
-  font-weight: bold;
-  box-shadow: 0 -3px 10px rgba(0,0,0,0.5);
-  z-index: 10;
-}
-.bottom-stats span {
-  color: var(--accent);
-}
+    #difficulty {
+      margin-bottom: 15px;
+    }
 
-/* Back to Home button top-left */
-#back-home {
-  position: fixed;
-  top: 20px;
-  left: 20px;
-  z-index: 20;
-  background-color: var(--accent);
-  color: var(--bg);
-  padding: 8px 15px;
-  border-radius: 5px;
-  border: none;
-  cursor: pointer;
-}
+    button {
+      padding: 8px 12px;
+      margin: 0 5px;
+      border: none;
+      border-radius: 5px;
+      background-color: var(--panel-2);
+      color: var(--text);
+      cursor: pointer;
+    }
 
-.top-img img{
-  width:650px;
-  max-height:550px;
-  object-fit:fill;
-  border-radius:12px;
-  border:2px solid #1e2755;
-  margin-bottom:20px
-}
-</style>
+    button.active {
+      background-color: var(--accent);
+      color: var(--bg);
+    }
+
+    /* Bottom fixed stats */
+    .bottom-stats {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: var(--panel);
+      display: flex;
+      justify-content: center;
+      gap: 50px;
+      padding: 15px 0;
+      font-size: 1.5rem;
+      font-weight: bold;
+      box-shadow: 0 -3px 10px rgba(0, 0, 0, 0.5);
+      z-index: 10;
+    }
+
+    .bottom-stats span {
+      color: var(--accent);
+    }
+
+    /* Back to Home button top-left */
+    #back-home {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      z-index: 20;
+      background-color: var(--accent);
+      color: var(--bg);
+      padding: 8px 15px;
+      border-radius: 5px;
+      border: none;
+      cursor: pointer;
+    }
+
+    .top-img img {
+      width: 650px;
+      max-height: 550px;
+      object-fit: fill;
+      border-radius: 12px;
+      border: 2px solid #1e2755;
+      margin-bottom: 20px
+    }
+  </style>
 </head>
+
 <body>
 
-<!-- Back to Home Button -->
-<a href="./index.html">
-  <button id="back-home">Back to Home</button>
-</a>
+  <!-- Back to Home Button -->
+  <a href="./index.html">
+    <button id="back-home">Back to Home</button>
+  </a>
 
-<h1>Infinite Typing Trainer</h1>
+  <h1>Infinite Typing Trainer</h1>
 
-<!-- Difficulty Selection -->
-<div id="difficulty">
-  <button data-level="easy" class="active">Easy</button>
-  <button data-level="medium">Medium</button>
-  <button data-level="hard">Hard</button>
-</div>
+  <!-- Difficulty Selection -->
+  <div id="difficulty">
+    <button data-level="easy" class="active">Easy</button>
+    <button data-level="medium">Medium</button>
+    <button data-level="hard">Hard</button>
+  </div>
 
-<div class="top-img">
-      <img src="./TouchTypingKeyboardFingerChart.jpg" />
-</div>
+  <div class="top-img">
+    <img src="./TouchTypingKeyboardFingerChart.jpg" />
+  </div>
 
-<div class="panel">
-  <div id="typing-line">Loading drill...</div>
-  <div id="keyboard"></div>
-</div>
+  <div class="panel">
+    <div id="typing-line">Loading drill...</div>
+    <div id="keyboard"></div>
+  </div>
 
-<!-- Bottom stats panel -->
-<div class="bottom-stats">
-  <span>Score: <span id="score">0</span></span>
-  <span>WPM: <span id="wpm">0</span></span>
-  <span>Errors: <span id="errors">0</span></span>
-  <span>Accuracy: <span id="accuracy">100%</span></span>
-</div>
+  <!-- Bottom stats panel -->
+  <div class="bottom-stats">
+    <span>Score: <span id="score">0</span></span>
+    <span>WPM: <span id="wpm">0</span></span>
+    <span>Errors: <span id="errors">0</span></span>
+    <span>Accuracy: <span id="accuracy">100%</span></span>
+  </div>
 
-<script>
-// Keyboard layout QWERTY with special chars
-const keys = ["1","2","3","4","5","6","7","8","9","0","q","w","e","r","t","y","u","i","o","p","a","s","d","f","g","h","j","k","l","z","x","c","v","b","n","m"," ",",",".","/",";","'","[","]","\\","-","="];
-const keyboardEl = document.getElementById('keyboard');
-keys.forEach(k=>{
-  const div = document.createElement('div');
-  div.textContent = k===' ' ? ' ' : k;
-  div.className = 'key';
-  div.id = 'key-'+ (k===' ' ? 'space' : k);
-  keyboardEl.appendChild(div);
-});
+  <script>
+    // Keyboard layout QWERTY with special chars + Shift keys
+    const keys = [
+      "1", "2", "3", "4", "5", "6", "7", "8", "9", "0",
+      "q", "w", "e", "r", "t", "y", "u", "i", "o", "p",
+      "a", "s", "d", "f", "g", "h", "j", "k", "l",
+      "z", "x", "c", "v", "b", "n", "m",
+      " ", ",", ".", "/", ";", "'", "[", "]", "\\", "-", "=",
+      "ShiftLeft", "ShiftRight"
+    ];
 
-// Drills per difficulty
-const drills = {
-  easy: [
-    "aaaa","ssss","dddd","ffff","jjjj","kkkk","llll",";;;;",
-    "asas","sasa","dfdf","fdfd","jkjk","kjkj","l;l;",";l;l",
-    "asdf","fdsa","jkl;",";lkj","asdfjkl;","fdsa;lkj","asdjkl;","kljasd",
-    "asjk","df;l","sa;j","lk;d","a;sldkfj","f;djskla","jaklfsd;",
-    "s;df","ajkl","fkja","dl;s","kjsa","lf;d","sd;f","a;jk"
-  ],
-  medium: [
-    "qwer","rewq","tyui","iuyt","opop","poiu",
-    "qwas","erdf","tygh","uihj","opkl",
-    "qwerty","ytrewq","uiop","poiu",
-    "zxcv","vcxz","bnm,",",mnb",
-    "azsx","qazx","wsxc","edcv","rfvb","tgby",
-    "zxcvbn","nbvcxz",
-    "aqsw","zsexd","qazwsx","edcrfv",
-    "pl;'","okmn","ijnb","uhjm",
-    "asdfqwer","zxcvasdf",
-    "asdf","fdsa","jkl;",";lkj",
-    "asdfasdf","fdsafdsa",
-    "jkl;jkl;",";lkj;lkj",
-    "asdfjkl;","fsda;klj"
-  ],
-  hard: [
-    "awkward","rhythm","zephyr","mnemonic","quizzical",
-    "1234567890","!@#$%^&*",")(*&^%$#@","password123!","qwerty2024?",
-    ".,;:!?'", "\"\"''--__","((){})[]<>","`~|\\","C0d3!ng","P@ssw0rd!",
-    "Typ1ng#Fast","admin@login","root#123","mail@example.com",
-    "https://","www.example.com",
-    "the","and","for","you","are","was","all","any","can","had",
-    "there","about","after","other","where","under","never","always",
-    "together","everyone","important","different","remember","possible",
-    "how are you","thank you","good morning","see you soon", 
-    "have a nice day","let’s go now"
-  ]
-};
+    const keyboardEl = document.getElementById('keyboard');
+    keys.forEach(k => {
+      const div = document.createElement('div');
+      div.textContent = k === ' ' ? 'Space' : k;
+      div.className = 'key';
+      div.id = 'key-' + (k === ' ' ? 'space' : k.toLowerCase());
+      keyboardEl.appendChild(div);
+    });
 
-let currentLevel = "easy";
-let currentIndex = 0;
-let drillText = "";
-let score = 0;
-let errors = 0;
-let startTime = null;
+    // Drills per difficulty
+    const drills = {
+      easy: [
+        // Pure repeats
+        "aaaa", "ssss", "dddd", "ffff", "gggg", "hhhh", "jjjj", "kkkk", "llll", ";;;;",
 
-const typingLine = document.getElementById('typing-line');
-const scoreEl = document.getElementById('score');
-const wpmEl = document.getElementById('wpm');
-const errorsEl = document.getElementById('errors');
-const accuracyEl = document.getElementById('accuracy');
-const levelButtons = document.querySelectorAll("#difficulty button");
+        // Alternating pairs
+        "asas", "sasa", "dfdf", "fdfd", "jkjk", "kjkj", "l;l;", ";l;l",
+        "gfgf", "hghg", "jhjh", "kjkj", ";k;k", "l;l;",
 
-function getNewDrill(){
-  const arr = drills[currentLevel];
-  drillText = arr[Math.floor(Math.random()*arr.length)];
-  currentIndex = 0;
-  updateLine();
-}
+        // Classic sequences
+        "asdf", "fdsa", "jkl;", ";lkj", "asdfjkl;", "fdsa;lkj", "asdjkl;", "kljasd",
 
-function highlightKey(char, state){
-  const keyId = char===' ' ? 'space' : char;
-  const keyDiv = document.getElementById('key-'+keyId);
-  if(!keyDiv) return;
-  keyDiv.className = 'key '+state;
-  setTimeout(()=>{ keyDiv.className='key'; },150);
-}
+        // Mixed short patterns
+        "asjk", "df;l", "sa;j", "lk;d",
+        "s;df", "ajkl", "fkja", "dl;s",
+        "kjsa", "lf;d", "sd;f", "a;jk",
 
-function updateLine(){
-  let displayed = "";
-  for(let i=0;i<drillText.length;i++){
-    if(i<currentIndex){
-      displayed += `<span style="color:var(--good)">${drillText[i]}</span>`;
-    } else if(i===currentIndex){
-      displayed += `<span style="color:var(--accent); text-decoration: underline">${drillText[i]}</span>`;
-    } else {
-      displayed += drillText[i];
+        // Extended home row practice
+        "a;sldkfj", "f;djskla", "jaklfsd;", ";lkjasdf", "asdf;lkj", "lkjasdf;",
+
+        // Double/triple drills
+        "asdasd", "jkljkl", "dfgdfg", "hjkhjk", ";lk;lk", "asaasa", "jkjjkj",
+
+        // Home row stretches
+        "ghgh", "fgfg", "hjhj", "kjlk", "asgh", "dfhj", "jklh", "sdhj"
+      ],
+      medium: [
+        // Row drills + reverses
+        "qwer", "rewq", "tyui", "iuyt", "opop", "poiu",
+        "qwas", "erdf", "tygh", "uihj", "opkl",
+        "qwerty", "ytrewq", "uiop", "poiu",
+        "zxcv", "vcxz", "bnm,", ",mnb",
+        "azsx", "qazx", "wsxc", "edcv", "rfvb", "tgby",
+        "zxcvbn", "nbvcxz",
+
+        // Diagonal drills
+        "qaz", "wsx", "edc", "rfv", "tgb", "yhn", "ujm",
+        "zaq", "xsw", "cde", "vfr", "bgt", "nhy", "mju",
+
+        // Mixed patterns
+        "aqsw", "zsexd", "qazwsx", "edcrfv",
+        "pl;'", "okmn", "ijnb", "uhjm",
+        "asdfqwer", "zxcvasdf",
+        "asdf", "fdsa", "jkl;", ";lkj",
+        "asdfasdf", "fdsafdsa",
+        "jkl;jkl;", ";lkj;lkj",
+        "asdfjkl;", "fsda;klj",
+
+        // Number row mini-drills
+        "1234", "4321", "5678", "8765", "9012", "2109",
+        "1357", "2468", "0987", "7654", "3210",
+
+        // Symbol row mini-drills
+        "!@#$", "$#@!", "%^&*", "*&^%", "(){}", "}{)(",
+        "[]<>", "<>[]", "`~|\\", "/?.:,;", "'\"\"'", "_-+=",
+
+        // Longer vowel mixes
+        "aeiou", "iouae", "oyea", "uiaeo", "yayoi",
+        "ieaou", "ouaie", "uaeio", "eaiou", "yoaue",
+        "aeioy", "iouya", "ueoai", "ayieu", "oeyui",
+        "yuoai", "aieou", "oeiay", "euoia", "uyoae",
+
+        // Extended vowel chains (extreme finger stretch)
+        "aeiouy", "iouaey", "uoyaei", "eaiouy", "yaeiou",
+        "iouyea", "aeioyu", "uieoya", "oyaieu", "yuoaei"
+      ],
+      hard: [
+        // Rare / awkward words
+        "awkward", "rhythm", "zephyr", "mnemonic", "quizzical",
+
+        // Extra coverage words (missing letters)
+        "jigsaw", "jazz", "xylophone", "syntax", "keyboard", "knock", "phantom", "knight",
+
+        // Numbers
+        "12345", "67890", "09876", "54321",
+
+        // Symbols
+        "!@#", "$%^", "&*()", "[]{}", "<>", "`~", "|\\", "/?.:;", "\"'", "_-+=",
+
+        // Hard mixed strings
+        "password123!", "qwerty2024?", "P@ssw0rd!2024", "Admin#Login",
+        "root#123", "mail@example.com", "www.example.com",
+
+        // With cases
+        "snake_case", "camelCase", "PascalCase", "Mix3dC@s3",
+
+        // Punctuation-heavy
+        "'--__", "..,,", "!!??", "::;;", "\"\"''",
+
+        // Security-style strings
+        "P@ssw0rd2025!", "Admin@2025", "User#Login", "CVE-2025-12345",
+        "Error404", "Critical_Vuln", "SecureKey!", "Token#ID",
+
+        // Common short words (for flow & speed)
+        "the", "and", "for", "you", "are", "was", "all", "any", "can", "had",
+        "of", "to", "in", "it", "is", "on", "at", "by", "as", "if",
+        "we", "us", "he", "she", "me", "my", "do", "no", "yes", "up", "go", "so",
+
+        // Longer but common
+        "there", "about", "after", "other", "where", "under", "never", "always",
+        "together", "everyone", "important", "different", "remember", "possible",
+
+        // Daily-use short words
+        "how", "thank", "good", "morning", "see", "soon",
+        "nice", "day", "let’s", "go", "now", "type", "fast", "quick", "word", "speed"
+      ]
+    };
+
+    let currentLevel = "easy";
+    let currentIndex = 0;
+    let drillText = "";
+    let score = 0;
+    let errors = 0;
+    let startTime = null;
+
+    const typingLine = document.getElementById('typing-line');
+    const scoreEl = document.getElementById('score');
+    const wpmEl = document.getElementById('wpm');
+    const errorsEl = document.getElementById('errors');
+    const accuracyEl = document.getElementById('accuracy');
+    const levelButtons = document.querySelectorAll("#difficulty button");
+
+    function getNewDrill() {
+      const arr = drills[currentLevel];
+      drillText = arr[Math.floor(Math.random() * arr.length)];
+      currentIndex = 0;
+      updateLine();
     }
-  }
-  typingLine.innerHTML = displayed;
-}
 
-function updateStats(){
-  scoreEl.textContent = score;
-  errorsEl.textContent = errors;
+    function highlightKey(char, state) {
+      let keyId;
+      if (char === ' ') keyId = 'space';
+      else if (char === 'ShiftLeft' || char === 'ShiftRight') keyId = char.toLowerCase();
+      else keyId = char.toLowerCase();
 
-  const total = score + errors;
-  const acc = total > 0 ? ((score/total)*100).toFixed(1) : 100;
-  accuracyEl.textContent = acc + "%";
+      const keyDiv = document.getElementById('key-' + keyId);
+      if (!keyDiv) return;
 
-  if(startTime){
-    const elapsedMinutes = (Date.now() - startTime) / 60000;
-    const wpm = elapsedMinutes > 0 ? ((score/5) / elapsedMinutes).toFixed(1) : 0;
-    wpmEl.textContent = wpm;
-  }
-}
+      keyDiv.className = 'key ' + state;
 
-// Difficulty buttons
-levelButtons.forEach(btn=>{
-  btn.addEventListener('click', ()=>{
-    levelButtons.forEach(b=>b.classList.remove('active'));
-    btn.classList.add('active');
-    currentLevel = btn.dataset.level;
+      // only auto-reset non-shift keys
+      if (!char.toLowerCase().includes('shift')) {
+        setTimeout(() => { keyDiv.className = 'key'; }, 150);
+      }
+    }
+
+    function updateLine() {
+      let displayed = "";
+      for (let i = 0; i < drillText.length; i++) {
+        if (i < currentIndex) {
+          displayed += `<span style="color:var(--good)">${drillText[i]}</span>`;
+        } else if (i === currentIndex) {
+          displayed += `<span style="color:var(--accent); text-decoration: underline">${drillText[i]}</span>`;
+        } else {
+          displayed += drillText[i];
+        }
+      }
+      typingLine.innerHTML = displayed;
+    }
+
+    function updateStats() {
+      scoreEl.textContent = score;
+      errorsEl.textContent = errors;
+
+      const total = score + errors;
+      const acc = total > 0 ? ((score / total) * 100).toFixed(1) : 100;
+      accuracyEl.textContent = acc + "%";
+
+      if (startTime) {
+        const elapsedMinutes = (Date.now() - startTime) / 60000;
+        const wpm = elapsedMinutes > 0 ? ((score / 5) / elapsedMinutes).toFixed(1) : 0;
+        wpmEl.textContent = wpm;
+      }
+    }
+
+    // Difficulty buttons
+    levelButtons.forEach(btn => {
+      btn.addEventListener('click', () => {
+        levelButtons.forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        currentLevel = btn.dataset.level;
+        getNewDrill();
+      });
+    });
+
+    // Typing logic
+    document.addEventListener('keydown', e => {
+      if (!startTime) startTime = Date.now();
+
+      // Handle Shift separately
+      if (e.key === "Shift") {
+        highlightKey(e.code, 'active'); // ShiftLeft or ShiftRight
+        return;
+      }
+
+      const key = e.key;
+      const expected = drillText[currentIndex];
+
+      if (key === expected) {
+        currentIndex++;
+        score++;
+        highlightKey(key, 'correct');
+      } else {
+        errors++;
+        highlightKey(key, 'incorrect');
+      }
+
+      updateStats();
+
+      if (currentIndex >= drillText.length) {
+        getNewDrill();
+      } else {
+        updateLine();
+      }
+    });
+
+    document.addEventListener('keyup', e => {
+      if (e.key === "Shift") {
+        highlightKey(e.code, ''); // reset shift key
+      }
+    });
+
     getNewDrill();
-  });
-});
-
-// Typing logic
-document.addEventListener('keydown', e=>{
-  if(!startTime) startTime = Date.now(); // start timer on first key
-
-  const key = e.key.toLowerCase();
-  const expected = drillText[currentIndex];
-  const keyChar = key===' ' ? ' ' : key;
-
-  if(keyChar === expected){
-    currentIndex++;
-    score++;
-    highlightKey(key,'correct');
-  } else {
-    errors++;
-    highlightKey(key,'incorrect');
-  }
-
-  updateStats();
-
-  if(currentIndex>=drillText.length){
-    getNewDrill();
-  } else {
-    updateLine();
-  }
-});
-
-getNewDrill();
-</script>
+  </script>
 
 </body>
+
 </html>
