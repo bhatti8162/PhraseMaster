@@ -50,7 +50,6 @@
       box-shadow: var(--ring);
       text-align: center;
       margin-bottom: 80px;
-      /* leave space for bottom stats */
     }
 
     #typing-line {
@@ -117,7 +116,6 @@
       color: var(--bg);
     }
 
-    /* Bottom fixed stats */
     .bottom-stats {
       position: fixed;
       bottom: 0;
@@ -138,7 +136,6 @@
       color: var(--accent);
     }
 
-    /* Back to Home button top-left */
     #back-home {
       position: fixed;
       top: 20px;
@@ -165,14 +162,12 @@
 
 <body>
 
-  <!-- Back to Home Button -->
   <a href="./index.html">
     <button id="back-home">Back to Home</button>
   </a>
 
   <h1>Infinite Typing Trainer</h1>
 
-  <!-- Difficulty Selection -->
   <div id="difficulty">
     <button data-level="easy" class="active">Easy</button>
     <button data-level="medium">Medium</button>
@@ -188,7 +183,6 @@
     <div id="keyboard"></div>
   </div>
 
-  <!-- Bottom stats panel -->
   <div class="bottom-stats">
     <span>Score: <span id="score">0</span></span>
     <span>WPM: <span id="wpm">0</span></span>
@@ -197,7 +191,6 @@
   </div>
 
   <script>
-    // Keyboard layout QWERTY with special chars + Shift keys
     const keys = [
       "1", "2", "3", "4", "5", "6", "7", "8", "9", "0",
       "q", "w", "e", "r", "t", "y", "u", "i", "o", "p",
@@ -216,8 +209,7 @@
       keyboardEl.appendChild(div);
     });
 
-    // Drills per difficulty
-    const drills = {
+const drills = {
       easy: [
         // Pure repeats
         "aaaa", "ssss", "dddd", "ffff", "gggg", "hhhh", "jjjj", "kkkk", "llll", ";;;;",
@@ -339,9 +331,22 @@
     const accuracyEl = document.getElementById('accuracy');
     const levelButtons = document.querySelectorAll("#difficulty button");
 
+    // shuffle bag
+    let shuffledDrills = [];
+    function shuffle(array) {
+      let copy = [...array];
+      for (let i = copy.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copy[i], copy[j]] = [copy[j], copy[i]];
+      }
+      return copy;
+    }
+
     function getNewDrill() {
-      const arr = drills[currentLevel];
-      drillText = arr[Math.floor(Math.random() * arr.length)];
+      if (shuffledDrills.length === 0) {
+        shuffledDrills = shuffle(drills[currentLevel]);
+      }
+      drillText = shuffledDrills.shift();
       currentIndex = 0;
       updateLine();
     }
@@ -356,8 +361,6 @@
       if (!keyDiv) return;
 
       keyDiv.className = 'key ' + state;
-
-      // only auto-reset non-shift keys
       if (!char.toLowerCase().includes('shift')) {
         setTimeout(() => { keyDiv.className = 'key'; }, 150);
       }
@@ -380,11 +383,9 @@
     function updateStats() {
       scoreEl.textContent = score;
       errorsEl.textContent = errors;
-
       const total = score + errors;
       const acc = total > 0 ? ((score / total) * 100).toFixed(1) : 100;
       accuracyEl.textContent = acc + "%";
-
       if (startTime) {
         const elapsedMinutes = (Date.now() - startTime) / 60000;
         const wpm = elapsedMinutes > 0 ? ((score / 5) / elapsedMinutes).toFixed(1) : 0;
@@ -392,29 +393,24 @@
       }
     }
 
-    // Difficulty buttons
     levelButtons.forEach(btn => {
       btn.addEventListener('click', () => {
         levelButtons.forEach(b => b.classList.remove('active'));
         btn.classList.add('active');
         currentLevel = btn.dataset.level;
+        shuffledDrills = [];
         getNewDrill();
       });
     });
 
-    // Typing logic
     document.addEventListener('keydown', e => {
       if (!startTime) startTime = Date.now();
-
-      // Handle Shift separately
       if (e.key === "Shift") {
-        highlightKey(e.code, 'active'); // ShiftLeft or ShiftRight
+        highlightKey(e.code, 'active');
         return;
       }
-
       const key = e.key;
       const expected = drillText[currentIndex];
-
       if (key === expected) {
         currentIndex++;
         score++;
@@ -423,9 +419,7 @@
         errors++;
         highlightKey(key, 'incorrect');
       }
-
       updateStats();
-
       if (currentIndex >= drillText.length) {
         getNewDrill();
       } else {
@@ -435,13 +429,11 @@
 
     document.addEventListener('keyup', e => {
       if (e.key === "Shift") {
-        highlightKey(e.code, ''); // reset shift key
+        highlightKey(e.code, '');
       }
     });
 
     getNewDrill();
   </script>
-
 </body>
-
 </html>
