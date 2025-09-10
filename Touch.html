@@ -210,7 +210,7 @@
     });
 
     const drills = {
-      easy: [
+    easy: [
         // Pure repeats
         "aaaa", "ssss", "dddd", "ffff", "gggg", "hhhh", "jjjj", "kkkk", "llll", ";;;;",
 
@@ -350,8 +350,8 @@
     const accuracyEl = document.getElementById('accuracy');
     const levelButtons = document.querySelectorAll("#difficulty button");
 
-    // shuffle bag
     let shuffledDrills = [];
+
     function shuffle(array) {
       let copy = [...array];
       for (let i = copy.length - 1; i > 0; i--) {
@@ -424,12 +424,18 @@
 
     document.addEventListener('keydown', e => {
       if (!startTime) startTime = Date.now();
+
+      // Prevent page scroll on space
+      if (e.key === ' ') e.preventDefault();
+
       if (e.key === "Shift") {
         highlightKey(e.code, 'active');
         return;
       }
+
       const key = e.key;
       const expected = drillText[currentIndex];
+
       if (key === expected) {
         currentIndex++;
         score++;
@@ -438,7 +444,9 @@
         errors++;
         highlightKey(key, 'incorrect');
       }
+
       updateStats();
+
       if (currentIndex >= drillText.length) {
         getNewDrill();
       } else {

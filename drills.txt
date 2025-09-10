@@ -1,0 +1,124 @@
+easy: [
+        // Pure repeats
+        "aaaa", "ssss", "dddd", "ffff", "gggg", "hhhh", "jjjj", "kkkk", "llll", ";;;;",
+
+        // Alternating pairs
+        "asas", "sasa", "dfdf", "fdfd", "jkjk", "kjkj", "l;l;", ";l;l",
+        "gfgf", "hghg", "jhjh", "kjkj", ";k;k", "l;l;",
+
+        // Classic sequences
+        "asdf", "fdsa", "jkl;", ";lkj", "asdfjkl;", "fdsa;lkj", "asdjkl;", "kljasd",
+
+        // Mixed short patterns
+        "asjk", "df;l", "sa;j", "lk;d",
+        "s;df", "ajkl", "fkja", "dl;s",
+        "kjsa", "lf;d", "sd;f", "a;jk",
+
+        // Extended home row practice
+        "a;sldkfj", "f;djskla", "jaklfsd;", ";lkjasdf", "asdf;lkj", "lkjasdf;",
+
+        // Double/triple drills
+        "asdasd", "jkljkl", "dfgdfg", "hjkhjk", ";lk;lk", "asaasa", "jkjjkj",
+
+        // Home row stretches
+        "ghgh", "fgfg", "hjhj", "kjlk", "asgh", "dfhj", "jklh", "sdhj"
+      ],
+      medium: [
+        // Row drills + reverses
+        "qwer", "rewq", "tyui", "iuyt", "opop", "poiu",
+        "qwas", "erdf", "tygh", "uihj", "opkl",
+        "qwerty", "ytrewq", "uiop", "poiu",
+        "zxcv", "vcxz", "bnm,", ",mnb",
+        "azsx", "qazx", "wsxc", "edcv", "rfvb", "tgby",
+        "zxcvbn", "nbvcxz",
+
+        // Diagonal drills
+        "qaz", "wsx", "edc", "rfv", "tgb", "yhn", "ujm",
+        "zaq", "xsw", "cde", "vfr", "bgt", "nhy", "mju",
+
+        // Mixed patterns
+        "aqsw", "zsexd", "qazwsx", "edcrfv",
+        "pl;'", "okmn", "ijnb", "uhjm",
+        "asdfqwer", "zxcvasdf",
+        "asdf", "fdsa", "jkl;", ";lkj",
+        "asdfasdf", "fdsafdsa",
+        "jkl;jkl;", ";lkj;lkj",
+        "asdfjkl;", "fsda;klj",
+
+        // Longer vowel mixes
+        "aeiou", "iouae", "oyea", "uiaeo", "yayoi",
+        "ieaou", "ouaie", "uaeio", "eaiou", "yoaue",
+        "aeioy", "iouya", "ueoai", "ayieu", "oeyui",
+        "yuoai", "aieou", "oeiay", "euoia", "uyoae",
+
+        // Extended vowel chains (extreme finger stretch)
+        "aeiouy", "iouaey", "uoyaei", "eaiouy", "yaeiou",
+        "iouyea", "aeioyu", "uieoya", "oyaieu", "yuoaei"
+      ],
+      hard: [
+
+        // With cases
+        "snake_case", "camelCase", "PascalCase",
+
+        // Punctuation-heavy
+        "'--__", "..,,", "!!??", "::;;", "\"\"''",
+
+        // Common English words (~500, all unique)
+        "the", "be", "to", "of", "and", "a", "in", "that", "have", "I",
+        "it", "for", "not", "on", "with", "he", "as", "you", "do", "at",
+        "this", "but", "his", "by", "from", "they", "we", "say", "her", "she",
+        "or", "an", "will", "my", "one", "all", "would", "there", "their",
+        "what", "so", "up", "out", "if", "about", "who", "get", "which", "go",
+        "me", "when", "make", "can", "like", "time", "no", "just", "him", "know",
+        "take", "people", "into", "year", "your", "good", "some", "could", "them", "see",
+        "other", "than", "then", "now", "look", "only", "come", "its", "over", "think",
+        "also", "back", "after", "use", "two", "how", "our", "work", "first", "well",
+        "way", "even", "new", "want", "because", "any", "these", "give", "day", "most",
+        "us", "is", "are", "was", "were", "has", "had", "did", "been", "may",
+        "might", "must", "shall", "should", "very", "much", "many", "every", "each", "such",
+        "man", "woman", "child", "children", "life", "world", "hand", "eye", "place", "case",
+        "week", "month", "night", "hour", "minute", "end", "beginning", "home", "house", "family",
+        "mother", "father", "brother", "sister", "friend", "student", "teacher", "company", "market", "money",
+        "food", "water", "city", "town", "village", "country", "nation", "state", "system", "computer",
+        "phone", "internet", "network", "problem", "question", "answer", "example", "idea", "story", "book",
+        "music", "song", "movie", "game", "sport", "team", "car", "bus", "train", "road",
+        "river", "mountain", "sea", "ocean", "earth", "sun", "moon", "star", "sky", "weather",
+        "rain", "snow", "wind", "storm", "fire", "light", "dark", "hot", "cold", "warm",
+        "big", "small", "long", "short", "high", "low", "young", "old", "good", "bad",
+
+        // Extra words (unique additions to reach ~500)
+        "fast", "slow", "early", "late", "strong", "weak", "hard", "soft", "open", "closed",
+        "happy", "sad", "angry", "kind", "nice", "mean", "beautiful", "ugly", "clean", "dirty",
+        "safe", "dangerous", "easy", "difficult", "right", "wrong", "true", "false", "same", "different",
+        "left", "forward", "backward", "above", "below", "inside", "outside", "near", "far",
+        "north", "south", "east", "west", "today", "tomorrow", "yesterday", "morning", "afternoon", "evening",
+        "always", "never", "sometimes", "often", "rarely", "usually", "again", "once", "twice", "later",
+        "longer", "shorter", "bigger", "smaller", "better", "worse", "best", "worst", "begin", "finish",
+        "start", "stop", "continue", "move", "stand", "sit", "walk", "run", "jump", "swim",
+        "fly", "drive", "ride", "travel", "visit", "stay", "live", "die", "build", "destroy",
+        "create", "fix", "break", "write", "read", "speak", "talk", "listen", "hear", "watch",
+        "smell", "taste", "touch", "feel", "believe", "understand", "learn", "study", "remember", "forget",
+        "love", "hate", "need", "hope", "wish", "dislike", "choose", "buy", "sell", "pay",
+        "cost", "spend", "save", "earn", "win", "lose", "send", "receive", "bring", "carry",
+        "hold", "keep", "show", "hide", "find", "search", "discover", "invent", "plan", "decide",
+        "try", "help", "support", "protect", "attack", "defend", "fight", "peace", "war", "army",
+        "police", "law", "rule", "order", "government", "leader", "president", "king", "queen", "border",
+        "flag", "capital", "doctor", "nurse", "hospital", "medicine", "health", "disease", "pain", "cure",
+        "care", "body", "head", "face", "mouth", "nose", "ear", "hair", "arm", "leg",
+        "foot", "back", "heart", "brain", "blood", "skin", "bone", "stomach", "sleep", "dream",
+        "animal", "dog", "cat", "bird", "horse", "cow", "pig", "sheep", "chicken", "bee",
+        "ant", "butterfly", "spider", "snake", "frog", "lion", "tiger", "elephant", "bear", "monkey",
+        "giraffe", "zebra", "rabbit", "deer", "wolf", "fox", "mouse", "rat", "whale", "dolphin",
+        "shark", "octopus", "crab", "turtle", "camel", "goat", "duck", "chair", "table", "bed",
+        "door", "window", "floor", "wall", "roof", "room", "kitchen", "bathroom", "garden", "street",
+        "bridge", "building", "office", "shop", "bank", "park", "tree", "plant", "flower", "grass",
+        "wood", "stone", "rock", "sand", "soil", "ground", "valley", "desert", "forest", "island",
+        "lake", "beach", "energy", "power", "electric", "machine", "engine", "motor", "wheel", "metal",
+        "iron", "gold", "silver", "copper", "glass", "plastic", "paper", "cloth", "shirt", "pants",
+        "shoes", "hat", "coat", "dress", "suit", "bag", "box", "bottle", "cup", "plate",
+        "knife", "spoon", "fork", "bread", "rice", "meat", "egg", "milk", "butter", "cheese",
+        "sugar", "salt", "pepper", "fruit", "apple", "banana", "orange", "lemon", "grape", "peach",
+        "pear", "plum", "cherry", "strawberry", "melon", "vegetable", "potato", "tomato", "onion", "carrot",
+        "cabbage", "beans", "peas", "corn", "lettuce", "broccoli", "cucumber", "spinach"
+
+      ]
