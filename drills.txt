@@ -57,68 +57,55 @@ easy: [
       ],
       hard: [
 
-        // With cases
-        "snake_case", "camelCase", "PascalCase",
+        // Naming conventions
+        "snake_case", "camelCase", "PascalCase", "kebab-case", "MixedUP_Case123",
 
         // Punctuation-heavy
-        "'--__", "..,,", "!!??", "::;;", "\"\"''",
+        "--__",  "..,,", "!!??",  "::;;",  "\"\"''", "///\\\\",
 
-        // Common English words (~500, all unique)
-        "the", "be", "to", "of", "and", "a", "in", "that", "have", "I",
-        "it", "for", "not", "on", "with", "he", "as", "you", "do", "at",
-        "this", "but", "his", "by", "from", "they", "we", "say", "her", "she",
-        "or", "an", "will", "my", "one", "all", "would", "there", "their",
-        "what", "so", "up", "out", "if", "about", "who", "get", "which", "go",
-        "me", "when", "make", "can", "like", "time", "no", "just", "him", "know",
-        "take", "people", "into", "year", "your", "good", "some", "could", "them", "see",
-        "other", "than", "then", "now", "look", "only", "come", "its", "over", "think",
-        "also", "back", "after", "use", "two", "how", "our", "work", "first", "well",
-        "way", "even", "new", "want", "because", "any", "these", "give", "day", "most",
-        "us", "is", "are", "was", "were", "has", "had", "did", "been", "may",
-        "might", "must", "shall", "should", "very", "much", "many", "every", "each", "such",
-        "man", "woman", "child", "children", "life", "world", "hand", "eye", "place", "case",
-        "week", "month", "night", "hour", "minute", "end", "beginning", "home", "house", "family",
-        "mother", "father", "brother", "sister", "friend", "student", "teacher", "company", "market", "money",
-        "food", "water", "city", "town", "village", "country", "nation", "state", "system", "computer",
-        "phone", "internet", "network", "problem", "question", "answer", "example", "idea", "story", "book",
-        "music", "song", "movie", "game", "sport", "team", "car", "bus", "train", "road",
-        "river", "mountain", "sea", "ocean", "earth", "sun", "moon", "star", "sky", "weather",
-        "rain", "snow", "wind", "storm", "fire", "light", "dark", "hot", "cold", "warm",
-        "big", "small", "long", "short", "high", "low", "young", "old", "good", "bad",
+        // Mixed complexity
+        "Case123!", "@#$%^&*", "word_word!", "Var$Name",
 
-        // Extra words (unique additions to reach ~500)
-        "fast", "slow", "early", "late", "strong", "weak", "hard", "soft", "open", "closed",
-        "happy", "sad", "angry", "kind", "nice", "mean", "beautiful", "ugly", "clean", "dirty",
-        "safe", "dangerous", "easy", "difficult", "right", "wrong", "true", "false", "same", "different",
-        "left", "forward", "backward", "above", "below", "inside", "outside", "near", "far",
-        "north", "south", "east", "west", "today", "tomorrow", "yesterday", "morning", "afternoon", "evening",
-        "always", "never", "sometimes", "often", "rarely", "usually", "again", "once", "twice", "later",
-        "longer", "shorter", "bigger", "smaller", "better", "worse", "best", "worst", "begin", "finish",
-        "start", "stop", "continue", "move", "stand", "sit", "walk", "run", "jump", "swim",
-        "fly", "drive", "ride", "travel", "visit", "stay", "live", "die", "build", "destroy",
-        "create", "fix", "break", "write", "read", "speak", "talk", "listen", "hear", "watch",
-        "smell", "taste", "touch", "feel", "believe", "understand", "learn", "study", "remember", "forget",
-        "love", "hate", "need", "hope", "wish", "dislike", "choose", "buy", "sell", "pay",
-        "cost", "spend", "save", "earn", "win", "lose", "send", "receive", "bring", "carry",
-        "hold", "keep", "show", "hide", "find", "search", "discover", "invent", "plan", "decide",
-        "try", "help", "support", "protect", "attack", "defend", "fight", "peace", "war", "army",
-        "police", "law", "rule", "order", "government", "leader", "president", "king", "queen", "border",
-        "flag", "capital", "doctor", "nurse", "hospital", "medicine", "health", "disease", "pain", "cure",
-        "care", "body", "head", "face", "mouth", "nose", "ear", "hair", "arm", "leg",
-        "foot", "back", "heart", "brain", "blood", "skin", "bone", "stomach", "sleep", "dream",
-        "animal", "dog", "cat", "bird", "horse", "cow", "pig", "sheep", "chicken", "bee",
-        "ant", "butterfly", "spider", "snake", "frog", "lion", "tiger", "elephant", "bear", "monkey",
-        "giraffe", "zebra", "rabbit", "deer", "wolf", "fox", "mouse", "rat", "whale", "dolphin",
-        "shark", "octopus", "crab", "turtle", "camel", "goat", "duck", "chair", "table", "bed",
-        "door", "window", "floor", "wall", "roof", "room", "kitchen", "bathroom", "garden", "street",
-        "bridge", "building", "office", "shop", "bank", "park", "tree", "plant", "flower", "grass",
-        "wood", "stone", "rock", "sand", "soil", "ground", "valley", "desert", "forest", "island",
-        "lake", "beach", "energy", "power", "electric", "machine", "engine", "motor", "wheel", "metal",
-        "iron", "gold", "silver", "copper", "glass", "plastic", "paper", "cloth", "shirt", "pants",
-        "shoes", "hat", "coat", "dress", "suit", "bag", "box", "bottle", "cup", "plate",
-        "knife", "spoon", "fork", "bread", "rice", "meat", "egg", "milk", "butter", "cheese",
-        "sugar", "salt", "pepper", "fruit", "apple", "banana", "orange", "lemon", "grape", "peach",
-        "pear", "plum", "cherry", "strawberry", "melon", "vegetable", "potato", "tomato", "onion", "carrot",
-        "cabbage", "beans", "peas", "corn", "lettuce", "broccoli", "cucumber", "spinach"
+      ],
 
-      ]
+      common4: [
+        // 2-letter essentials
+        "of", "to", "in", "on", "at", "by", "as", "an", "or", "if",
+        "is", "it", "he", "we", "be", "do", "me", "my", "no", "so",
+
+        // 3-letter essentials
+        "the", "and", "for", "not", "but", "you", "all", "any", "are", "can",
+        "had", "her", "him", "his", "its", "out", "one", "new", "now", "too",
+
+        // 4-letter essentials
+        "this", "that", "with", "from", "your",
+        "have", "they", "them", "what", "when",
+        "will", "then", "some", "more", "well",
+        "good", "like", "time", "work", "love"
+      ],
+
+    commonAbove4: [
+        // 5 letters (20)
+        "about", "other", "which", "their", "there",
+        "these", "would", "could", "first", "after",
+        "where", "those", "place", "still", "every",
+        "under", "while", "right", "small", "house",
+
+        // 6 letters (20)
+        "people", "number", "before", "little", "public",
+        "within", "school", "always", "around", "second",
+        "family", "worlds", "though", "change", "around",
+        "friend", "market", "mother", "father", "social",
+
+        // 7 letters (20)
+        "because", "between", "without", "another", "through",
+        "nothing", "general", "system", "against", "thought",
+        "already", "service", "problem", "country", "example",
+        "morning", "program", "special", "student", "history",
+
+        // 8 letters (20)
+        "children", "together", "business", "possible", "language",
+        "interest", "question", "national", "important", "government",
+        "company", "continue", "building", "cultural", "consider",
+        "personal", "remember", "anything", "everyone", "services"
+    ]
