@@ -2,8 +2,8 @@
 <html lang="en">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Infinite Typing Trainer</title>
   <style>
     :root {
@@ -142,7 +142,7 @@
       object-fit: fill;
       border-radius: 12px;
       border: 2px solid #1e2755;
-      margin-bottom: 20px
+      margin-bottom: 20px;
     }
   </style>
 </head>
@@ -152,7 +152,7 @@
   <h1>Infinite Typing Trainer</h1>
 
   <div class="top-img">
-    <img src="./TouchTypingKeyboardFingerChart.jpg" />
+    <img src="./TouchTypingKeyboardFingerChart.jpg" alt="Typing chart" />
   </div>
 
   <div id="difficulty">
@@ -179,6 +179,7 @@
   <audio id="error-sound" src="https://www.soundjay.com/buttons/sounds/button-22.mp3" preload="auto"></audio>
 
   <script>
+    // --- drills: keys must match button data-level attributes ---
     const drills = {
       easy: [
         // Pure repeats
@@ -205,7 +206,7 @@
         // Home row stretches
         "ghgh", "fgfg", "hjhj", "kjlk", "asgh", "dfhj", "jklh", "sdhj"
       ],
-      medium: [
+medium: [
         // Row drills + reverses
         "qwer", "rewq", "tyui", "iuyt", "opop", "poiu",
         "qwas", "erdf", "tygh", "uihj", "opkl",
@@ -237,7 +238,7 @@
         "aeiouy", "iouaey", "uoyaei", "eaiouy", "yaeiou",
         "iouyea", "aeioyu", "uieoya", "oyaieu", "yuoaei"
       ],
-      hard: [
+hard: [
 
         // Naming conventions
         "snake_case", "camelCase", "PascalCase", "kebab-case", "MixedUP_Case123",
@@ -250,7 +251,7 @@
 
       ],
 
-      common4: [
+common4: [
         // 2-letter essentials
         "of", "to", "in", "on", "at", "by", "as", "an", "or", "if",
         "is", "it", "he", "we", "be", "do", "me", "my", "no", "so",
@@ -263,10 +264,10 @@
         "this", "that", "with", "from", "your",
         "have", "they", "them", "what", "when",
         "will", "then", "some", "more", "well",
-        "good", "like", "time", "work", "love"
+        "good", "like", "time", "work", "most"
       ],
 
-    commonAbove4: [
+above4: [
         // 5 letters (20)
         "about", "other", "which", "their", "there",
         "these", "would", "could", "first", "after",
@@ -293,6 +294,7 @@
     ]
     };
 
+    // --- state ---
     let currentLevel = "easy";
     let currentIndex = 0;
     let drillText = "";
@@ -311,6 +313,7 @@
     let shuffledDrills = [];
 
     function shuffle(array) {
+      if (!Array.isArray(array)) return [];
       let copy = [...array];
       for (let i = copy.length - 1; i > 0; i--) {
         const j = Math.floor(Math.random() * (i + 1));
@@ -319,24 +322,52 @@
       return copy;
     }
 
+    function escapeHtml(str) {
+      return String(str).replace(/&/g, '&amp;')
+                        .replace(/</g, '&lt;')
+                        .replace(/>/g, '&gt;')
+                        .replace(/"/g, '&quot;')
+                        .replace(/'/g, '&#39;');
+    }
+
     function getNewDrill() {
+      // if level missing, fallback safely to 'easy'
+      if (!Array.isArray(drills[currentLevel]) || drills[currentLevel].length === 0) {
+        console.warn(`No drills for level "${currentLevel}" — falling back to "easy".`);
+        currentLevel = 'easy';
+        levelButtons.forEach(b => b.classList.toggle('active', b.dataset.level === currentLevel));
+      }
+
       if (shuffledDrills.length === 0) {
         shuffledDrills = shuffle(drills[currentLevel]);
       }
+
+      if (!shuffledDrills || shuffledDrills.length === 0) {
+        typingLine.textContent = 'No drills available for the selected level.';
+        drillText = '';
+        currentIndex = 0;
+        return;
+      }
+
       drillText = shuffledDrills.shift();
       currentIndex = 0;
       updateLine();
     }
 
     function updateLine() {
-      let displayed = "";
+      if (!drillText) {
+        typingLine.textContent = '';
+        return;
+      }
+      let displayed = '';
       for (let i = 0; i < drillText.length; i++) {
+        const ch = escapeHtml(drillText[i]);
         if (i < currentIndex) {
-          displayed += `<span style="color:var(--good)">${drillText[i]}</span>`;
+          displayed += `<span style="color:var(--good)">${ch}</span>`;
         } else if (i === currentIndex) {
-          displayed += `<span style="color:var(--accent); text-decoration: underline">${drillText[i]}</span>`;
+          displayed += `<span style="color:var(--accent); text-decoration: underline">${ch}</span>`;
         } else {
-          displayed += drillText[i];
+          displayed += ch;
         }
       }
       typingLine.innerHTML = displayed;
@@ -365,20 +396,34 @@
       });
     });
 
+    // ignore long/non-character keys to avoid accidental crashes
+    const IGNORE_KEYS = new Set([
+      'Shift', 'Alt', 'Control', 'Meta', 'CapsLock', 'Tab', 'Escape',
+      'ArrowLeft', 'ArrowRight', 'ArrowUp', 'ArrowDown', 'Enter', 'Backspace',
+      'Insert', 'Home', 'End', 'PageUp', 'PageDown', 'ContextMenu'
+    ]);
+
     document.addEventListener('keydown', e => {
       if (!startTime) startTime = Date.now();
-      if (e.key === ' ') e.preventDefault();
-      if (e.key === "Shift") return;
 
-      const key = e.key;
+      if (IGNORE_KEYS.has(e.key)) return;
+
+      // prevent page scroll on spacebar but still treat it as a character
+      if (e.key === ' ') e.preventDefault();
+
+      // only accept single character keys plus space
+      const key = (e.key.length === 1) ? e.key : (e.key === ' ' ? ' ' : null);
+      if (key === null) return;
+
+      if (!drillText) return;
+
       const expected = drillText[currentIndex];
 
       if (key === expected) {
         currentIndex++;
       } else {
         errors++;
-        errorSound.currentTime = 0; // rewind sound
-        errorSound.play();          // play error sound
+        try { errorSound.currentTime = 0; errorSound.play(); } catch (err) { /* ignore audio errors */ }
       }
 
       if (currentIndex >= drillText.length) {
@@ -391,7 +436,9 @@
       }
     });
 
+    // initial drill
     getNewDrill();
   </script>
 </body>
+
 </html>

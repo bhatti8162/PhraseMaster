@@ -23,7 +23,7 @@ easy: [
         // Home row stretches
         "ghgh", "fgfg", "hjhj", "kjlk", "asgh", "dfhj", "jklh", "sdhj"
       ],
-      medium: [
+medium: [
         // Row drills + reverses
         "qwer", "rewq", "tyui", "iuyt", "opop", "poiu",
         "qwas", "erdf", "tygh", "uihj", "opkl",
@@ -55,7 +55,7 @@ easy: [
         "aeiouy", "iouaey", "uoyaei", "eaiouy", "yaeiou",
         "iouyea", "aeioyu", "uieoya", "oyaieu", "yuoaei"
       ],
-      hard: [
+hard: [
 
         // Naming conventions
         "snake_case", "camelCase", "PascalCase", "kebab-case", "MixedUP_Case123",
@@ -68,7 +68,7 @@ easy: [
 
       ],
 
-      common4: [
+common4: [
         // 2-letter essentials
         "of", "to", "in", "on", "at", "by", "as", "an", "or", "if",
         "is", "it", "he", "we", "be", "do", "me", "my", "no", "so",
@@ -81,10 +81,10 @@ easy: [
         "this", "that", "with", "from", "your",
         "have", "they", "them", "what", "when",
         "will", "then", "some", "more", "well",
-        "good", "like", "time", "work", "love"
+        "good", "like", "time", "work", "most"
       ],
 
-    commonAbove4: [
+above4: [
         // 5 letters (20)
         "about", "other", "which", "their", "there",
         "these", "would", "could", "first", "after",
