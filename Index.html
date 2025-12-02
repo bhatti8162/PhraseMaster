@@ -36,6 +36,51 @@
       padding: 20px;
     }
 
+     /* --- Header Bar --- */
+    .header-bar {
+      width: 100%;
+      background: var(--panel);
+      border-bottom: 1px solid #1e2755;
+      padding: 12px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+    }
+
+    .header-bar h1 {
+      margin: 0px 20px;
+      font-size: 20px;
+      font-weight: 700;
+      color: var(--text);
+    }
+
+    .header-bar a {
+      text-decoration: none;
+    }
+
+    .header-btn {
+      background: var(--bad);
+      color: var(--text);
+      padding: 8px 14px;
+      margin: 8px 14px;
+      border-radius: 8px;
+      font-weight: 600;
+      border: none;
+      cursor: pointer;
+      font-size: 14px;
+    }
+
+    .header-btn:hover {
+      background: var(--good);
+      color: var(--bg);
+      transform: translateY(-2px);
+      /* subtle lift */
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+    }
+
     h1 {
       margin-bottom: 20px;
       color: var(--accent);
@@ -148,6 +193,26 @@
 </head>
 
 <body>
+
+    <!-- Header Bar -->
+  <div class="header-bar">
+    <h1>PhraseMaster</h1>
+    <a href="./Index.html" target="_blank">
+      <button class="header-btn">Touch typing</button>
+    </a>
+
+    <a href="./Custom.html" target="_blank">
+      <button class="header-btn">Custom Phrase</button>
+    </a>
+
+    <a href="https://zty.pe/" target="_blank">
+      <button class="header-btn">Ztype</button>
+    </a>
+
+    <a href="https://10fastfingers.com/typing-test/english" target="_blank">
+      <button class="header-btn">Typing Test</button>
+    </a>
+  </div>
 
   <h1>Infinite Typing Trainer</h1>
 
@@ -441,4 +506,4 @@ above4: [
   </script>
 </body>
 
-</html>
+</html>>
