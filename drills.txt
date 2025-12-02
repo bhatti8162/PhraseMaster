@@ -69,43 +69,130 @@ hard: [
       ],
 
 common4: [
-        // 2-letter essentials
-        "of", "to", "in", "on", "at", "by", "as", "an", "or", "if",
-        "is", "it", "he", "we", "be", "do", "me", "my", "no", "so",
+  // 2-letter essentials
+  "of","to","in","on","at","by","as","an","or","if",
+  "is","it","he","we","be","do","me","my","no","so",
+  "up","go","am","us","ok","hi","oh","ye","im","id",
+  "pm","vs","mr","ms","dr","et","al","ad","tv","pc",
 
-        // 3-letter essentials
-        "the", "and", "for", "not", "but", "you", "all", "any", "are", "can",
-        "had", "her", "him", "his", "its", "out", "one", "new", "now", "too",
+  // 3-letter essentials
+  "the","and","for","not","but","you","all","any","are","can",
+  "had","her","him","his","its","out","one","new","now","too",
+  "see","say","let","get","put","ask","why","how","hey","yes",
+  "off","run","try","use","own","big","old","man","him","per",
+  "end","set","job","own","top","low","few","bad","far","lot",
+  "day","sit","lie","eat","win","air","sea","car","bus","map",
 
-        // 4-letter essentials
-        "this", "that", "with", "from", "your",
-        "have", "they", "them", "what", "when",
-        "will", "then", "some", "more", "well",
-        "good", "like", "time", "work", "most"
-      ],
+  // 4-letter essentials
+  "this","that","with","from","your",
+  "have","they","them","what","when",
+  "will","then","some","more","well",
+  "good","like","time","work","most",
+  "need","talk","take","give","know",
+  "help","stay","keep","move","made",
+  "long","just","back","life","look",
+  "love","home","door","room","city",
+  "area","team","plan","goal","hope",
+  "wait","send","feel","call","read",
+  "list","jump","walk","play","stay",
+  "save","fast","slow","easy","hard",
+  "live","grow","care","shop","cook",
+  "make","find","turn","join","open",
+  "hold","mean","lead","pass","join"
+],
+
 
 above4: [
-        // 5 letters (20)
-        "about", "other", "which", "their", "there",
-        "these", "would", "could", "first", "after",
-        "where", "those", "place", "still", "every",
-        "under", "while", "right", "small", "house",
+  // 5 letters
+  "about","other","which","their","there",
+  "these","would","could","first","after",
+  "where","those","place","still","every",
+  "under","while","right","small","house",
+  "great","think","again","three","never",
+  "found","young","order","point","group",
+  "world","water","story","heart","money",
+  "early","later","voice","light","sound",
+  "level","happy","share","learn","focus",
+  "power","means","break","bring","begin",
+  "drive","write","carry","prove","watch",
+  "catch","build","check","ready","quite",
+  "truth","happy","games","hours","ideas",
+  "skills","dream","spent","trust","solid",
 
-        // 6 letters (20)
-        "people", "number", "before", "little", "public",
-        "within", "school", "always", "around", "second",
-        "family", "worlds", "though", "change", "around",
-        "friend", "market", "mother", "father", "social",
+  // 6 letters
+  "people","number","before","little","public",
+  "within","school","always","around","second",
+  "family","worlds","though","change","friend",
+  "market","mother","father","social","system",
+  "strong","better","future","simple","matter",
+  "reason","moment","energy","nature","action",
+  "create","office","center","stream","design",
+  "latest","online","effort","beyond","demand",
+  "safety","manage","travel","source","report",
+  "planet","modern","health","skills","season",
+  "choice","memory","status","should","intent",
+  "normal","remain","silent","spirit","impact",
 
-        // 7 letters (20)
-        "because", "between", "without", "another", "through",
-        "nothing", "general", "system", "against", "thought",
-        "already", "service", "problem", "country", "example",
-        "morning", "program", "special", "student", "history",
+  // 7 letters
+  "because","between","without","another","through",
+  "nothing","general","service","problem","country",
+  "example","morning","program","special","student",
+  "history","support","network","process","purpose",
+  "product","meeting","success","culture","control",
+  "digital","picture","writing","reading","develop",
+  "feeling","support","quality","defense","message",
+  "storage","account","address","brother","sister",
+  "improve","mission","project","journey","freedom",
+  "passion","advance","connect","traffic","weather",
+  "teacher","science","patient","captain","believe",
 
-        // 8 letters (20)
-        "children", "together", "business", "possible", "language",
-        "interest", "question", "national", "important", "government",
-        "company", "continue", "building", "cultural", "consider",
-        "personal", "remember", "anything", "everyone", "services"
-    ]
+  // 8 letters
+  "children","together","business","possible","language",
+  "interest","question","national","important","government",
+  "continue","building","personal","remember","everyone",
+  "anything","services","security","research","economic",
+  "learning","complete","activity","pressure","decision",
+  "increase","progress","describe","movement","practice",
+  "solution","computer","physical","material","strategy",
+  "training","standard","valuable","creative","resource",
+  "customer","discover","industry","planning","behavior",
+  "software","hardware","director","consider","majority",
+  "speaking","thinking","marketing","scenario","protocol",
+
+  // 9 letters
+  "community","education","leadership","expression","objective",
+  "knowledge","authority","experience","influence","equipment",
+  "newspaper","motivation","intention","understand","importance",
+  "challenge","framework","preparing","continues","procedure",
+  "organized","following","awareness","structure","character",
+  "assistant","operation","situation","marketing","direction",
+  "committee","agreement","attention","consensus","difficult",
+  "effective","celebrate","narrative","discovery","container",
+
+  // 10 letters
+  "opportunity","development","temperature","environment",
+  "information","understanding","technically","generation",
+  "connection","responsible","experience","achievement",
+  "expression","application","leadership","foundation",
+  "confidence","challenges","continuous","evaluation",
+  "processing","specialist","innovation","perspective",
+  "background","population","prediction","scrollable",
+
+  // 11+ letters (for bulk word count)
+  "communication","international","representation","consideration",
+  "implementation","responsibility","administration","contribution",
+  "collaboration","transformation","characteristic","appreciation",
+  "entrepreneur","accountability","infrastructure","organization",
+  "recommendation","professionalism","experimentation","cooperation",
+  "investigation","configuration","authentication","authorization",
+  "contextualized","comprehensive","misunderstood","overestimated",
+  "interpersonal","multidimensional","institutional","documentation",
+
+  // Filler long words to reach ~1500 total
+  "environmental","countermeasure","collaborative","architectural",
+  "hyperrealistic","computational","unbelievable","extraordinary",
+  "sustainability","psychological","philosophical","compatibility",
+  "discrimination","instrumentation","responsiveness","illustration",
+  "recommendations","hyperautomation","operationalizing","visualization",
+  "standardization","demonstration","reconstruction","synchronization"
+]
